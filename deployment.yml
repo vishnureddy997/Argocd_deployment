@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: dockerrepository123/testnodeapp:2
+        image: dockerrepository123/testnodeapp:${env.IMAGE_TAG}
         ports:
         - containerPort: 8080
