@@ -36,6 +36,7 @@ pipeline {
                 sh '''
                     git config user.email "vishnureddy14ma@gmail.com"
                     git config user.name "Vishnu Reddy"
+                    APP_VERSION=${APP_VERSION}
                     sed -i "s/replaceImageTag/${APP_VERSION}/g" deployment.yml
                     git add deployment.yml
                     git commit -m "Update deployment image to version ${APP_VERSION}"
