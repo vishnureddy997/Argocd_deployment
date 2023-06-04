@@ -7,9 +7,17 @@ pipeline {
         git branch: 'main', url: 'https://github.com/vishnureddy997/Argocd_deployment.git'
       }
     }
+     stage('Set Variables') {
+      steps {
+        script {
+          env.APP_VERSION = '1.0.0' // Set the desired version number
+          env.IMAGE_VERSION = 'v1.2.3' // Set the desired image version
+        }
+      }
+    }
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "dockerrepository123/testnodeapp:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "dockerrepository123/testnodeapp:${APP_VERSION}"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
       steps {
@@ -32,8 +40,8 @@ pipeline {
                 sh '''
                     git config user.email "vishnureddy14ma@gmail.com"
                     git config user.name "Vishnu Reddy"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
+                   // BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/replaceImageTag/${APP_VERSION}/g" deployment.yml
                     git add deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
