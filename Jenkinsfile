@@ -1,9 +1,5 @@
 pipeline {
   agent any
-  environment {
-    APP_VERSION = '1.0.0' // Set the desired version number
-    IMAGE_VERSION = 'v1.2.3' // Set the desired image version
-  }
   stages {
     stage('Checkout') {
       steps {
@@ -13,7 +9,7 @@ pipeline {
     }
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "dockerrepository123/testnodeapp:${APP_VERSION}"
+        DOCKER_IMAGE = "dockerrepository123/testnodeapp:${BUILD_NUMBER}"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
       steps {
@@ -36,10 +32,10 @@ pipeline {
                 sh '''
                     git config user.email "vishnureddy14ma@gmail.com"
                     git config user.name "Vishnu Reddy"
-                    APP_VERSION=${APP_VERSION}
-                    sed -i "s/replaceImageTag/${APP_VERSION}/g" deployment.yml
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
                     git add deployment.yml
-                    git commit -m "Update deployment image to version ${APP_VERSION}"
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
             }
