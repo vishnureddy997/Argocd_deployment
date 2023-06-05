@@ -21,7 +21,7 @@ pipeline {
     }
     stage('Deleting Docker Images') {
       steps {
-        sh 'docker rmi $(docker images -aq)'
+        sh 'docker rmi $(docker images -q)'
       }
     }
     stage('Update Deployment File') {
