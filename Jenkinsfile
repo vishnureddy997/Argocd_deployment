@@ -48,7 +48,7 @@ pipeline {
               git config user.email "vishnureddy14ma@gmail.com"
               git config user.name "Vishnu Reddy"
               git add deploymentfiles/deployment.yml 
-              git commit -m "Update deployment image to version ${env.BUILD_NUMBER}" deployment.yml
+              git commit -m "Update deployment image to version ${env.BUILD_NUMBER}" deploymentfiles/deployment.yml
               git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
             """
           }
