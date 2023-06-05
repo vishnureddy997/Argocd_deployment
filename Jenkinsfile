@@ -14,10 +14,14 @@ pipeline {
           def dockerImage = docker.build("dockerrepository123/testnodeapp:${imageTag}", ".")
           docker.withRegistry('https://index.docker.io/v1/', 'docker-cred') {
             dockerImage.push()
-          sh "docker rmi $(docker images -aq)"
           }
           env.IMAGE_TAG = imageTag // Store the image tag in an environment variable for future 
         }
+      }
+    }
+    stage('Deleting Docker Images') {
+      steps {
+        sh 'docker rmi $(docker images -aq)'
       }
     }
     stage('Update Deployment File') {
