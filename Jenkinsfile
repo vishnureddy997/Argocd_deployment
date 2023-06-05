@@ -14,7 +14,7 @@ pipeline {
           def dockerImage = docker.build("dockerrepository123/testnodeapp:${imageTag}", ".")
           docker.withRegistry('https://index.docker.io/v1/', 'docker-cred') {
             dockerImage.push()
-           docker rmi $(docker images -aq)
+          sh "docker rmi $(docker images -aq)"
           }
           env.IMAGE_TAG = imageTag // Store the image tag in an environment variable for future 
         }
