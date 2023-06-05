@@ -28,8 +28,8 @@ pipeline {
       steps {
         script {
           sh """
-            sed -i 's|image: dockerrepository123/testnodeapp:.*|image: dockerrepository123/testnodeapp:${env.IMAGE_TAG}|' deployment.yml
-            cat deployment.yml
+            sed -i 's|image: dockerrepository123/testnodeapp:.*|image: dockerrepository123/testnodeapp:${env.IMAGE_TAG}|' deploymentfiles/deployment.yml
+            cat deploymentfiles/deployment.yml
           """
         }
       }
@@ -45,7 +45,7 @@ pipeline {
             sh """
               git config user.email "vishnureddy14ma@gmail.com"
               git config user.name "Vishnu Reddy"
-              git add deployment.yml 
+              git add deploymentfiles/deployment.yml 
               git commit -m "Update deployment image to version ${env.BUILD_NUMBER}" deployment.yml
               git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
             """
