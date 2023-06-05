@@ -29,7 +29,9 @@ pipeline {
         script {
           sh """
             sed -i 's|image: dockerrepository123/testnodeapp:.*|image: dockerrepository123/testnodeapp:${env.IMAGE_TAG}|' deploymentfiles/deployment.yml
-            cat deploymentfiles/deployment.yml
+            cd deploymentfiles/
+            cat deployment.yml
+            
           """
         }
       }
